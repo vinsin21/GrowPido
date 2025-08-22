@@ -13,10 +13,10 @@ interface TestimonialsGridMotionProps {
 export function TestimonialsGridMotion({ className }: TestimonialsGridMotionProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const rowRefs = useRef<(HTMLDivElement | null)[]>([])
-  const mouseXRef = useRef(typeof window !== "undefined" ? window.innerWidth / 2 : 0)
 
-  // Testimonial data mixed with decorative elements
+  // Testimonial data remains the same
   const testimonialItems = [
+    // ... (Your testimonialItems array remains unchanged)
     // Row 1
     <div key="testimonial-1" className="bg-white p-4 rounded-lg shadow-md h-full flex flex-col justify-between">
       <div className="flex items-center gap-2 mb-2">
@@ -51,9 +51,9 @@ export function TestimonialsGridMotion({ className }: TestimonialsGridMotionProp
       </div>
       <p className="text-xs text-gray-700 italic mb-2">"Our engagement rates skyrocketed!"</p>
       <div className="flex items-center gap-2">
-        <Image src="/placeholder.svg?height=24&width=24" width={24} height={24} alt="Maria" className="rounded-full" />
+        <Image src="https://media.licdn.com/dms/image/v2/D5603AQGrHG7vFEkIWQ/profile-displayphoto-scale_100_100/B56ZikwqY8HcAc-/0/1755110877806?e=1758153600&v=beta&t=ojyDRgir9x4pmRW75chtZSAlXNyt3-7p23mqTcM5tbg" width={24} height={24} alt="Ananya Sinha " className="rounded-full" />
         <div>
-          <p className="text-xs font-semibold text-gray-800">Maria Rodriguez</p>
+          <p className="text-xs font-semibold text-gray-800">Ananya Sinha </p>
           <p className="text-xs text-gray-500">Artisan Bakehouse</p>
         </div>
       </div>
@@ -249,48 +249,40 @@ export function TestimonialsGridMotion({ className }: TestimonialsGridMotionProp
     </div>,
   ]
 
+  // MODIFICATION: Replaced the entire mouse-based animation with a continuous loop
   useEffect(() => {
-    if (typeof window === "undefined") return
+    // NEW ANIMATION LOGIC
+    rowRefs.current.forEach((row, index) => {
+      if (row) {
+        // Determine direction and set a random-ish duration for variety
+        const direction = index % 2 === 0 ? -1 : 1;
+        const duration = 40 + Math.random() * 20; // e.g., scroll between 40s and 60s
 
-    gsap.ticker.lagSmoothing(0)
+        // Set the initial position based on direction
+        // Animate to the opposite end, creating a seamless loop
+        gsap.fromTo(
+          row,
+          { xPercent: 10 * direction },
+          {
+            xPercent: -10 * direction,
+            duration: duration,
+            ease: "none", // Linear ease for constant speed
+            repeat: -1, // Repeat indefinitely
+          }
+        );
+      }
+    });
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseXRef.current = e.clientX
-    }
-
-    const updateMotion = () => {
-      const maxMoveAmount = 200 // Reduced for more subtle effect
-      const baseDuration = 1.2 // Slower for smoother feel
-      const inertiaFactors = [0.8, 0.6, 0.4, 0.3]
-
-      rowRefs.current.forEach((row, index) => {
-        if (row) {
-          const direction = index % 2 === 0 ? 1 : -1
-          const moveAmount = ((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) * direction
-
-          gsap.to(row, {
-            x: moveAmount,
-            duration: baseDuration + inertiaFactors[index % inertiaFactors.length],
-            ease: "power2.out",
-            overwrite: "auto",
-          })
-        }
-      })
-    }
-
-    const removeAnimationLoop = gsap.ticker.add(updateMotion)
-    window.addEventListener("mousemove", handleMouseMove)
-
+    // Cleanup function to kill tweens when the component unmounts
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove)
-      removeAnimationLoop()
-    }
-  }, [])
+      gsap.killTweensOf(rowRefs.current);
+    };
+  }, []);
 
   return (
     <div className={cn("h-full w-full overflow-hidden relative", className)} ref={gridRef}>
       <section className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 to-blue-50">
-        {/* Centered content overlay */}
+        {/* Centered content overlay remains the same */}
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
           <div className="text-center bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl max-w-2xl mx-4">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">What Clients Say About My Work</h2>
@@ -307,25 +299,29 @@ export function TestimonialsGridMotion({ className }: TestimonialsGridMotionProp
         </div>
 
         {/* Animated grid background */}
-        <div className="relative z-10 flex-none grid h-[150vh] w-[150vw] gap-3 grid-rows-[repeat(4,1fr)] grid-cols-[100%] -rotate-15 origin-center opacity-60">
+        {/* MODIFICATION: Increased width to w-[200vw] to have space for scrolling */}
+        <div className="relative z-10 flex-none grid h-[150vh] w-[200vw] gap-3 grid-rows-[repeat(4,1fr)] grid-cols-[100%] -rotate-15 origin-center opacity-60">
           {[...Array(4)].map((_, rowIndex) => (
             <div
               key={rowIndex}
-              className="grid gap-3 grid-cols-[repeat(7,1fr)] will-change-transform will-change-filter"
+              // MODIFICATION: Double the number of columns to hold duplicated content
+              className="grid gap-3 grid-cols-[repeat(14,1fr)] will-change-transform"
               ref={(el) => (rowRefs.current[rowIndex] = el)}
             >
-              {[...Array(7)].map((_, itemIndex) => {
-                const content = testimonialItems[rowIndex * 7 + itemIndex]
+              {/* MODIFICATION: Map over 14 items instead of 7 to duplicate the content */}
+              {[...Array(14)].map((_, itemIndex) => {
+                // MODIFICATION: Use modulo to loop through the original 7 items
+                const content = testimonialItems[rowIndex * 7 + (itemIndex % 7)];
                 return (
                   <div key={itemIndex} className="relative">
                     <div className="relative h-full w-full overflow-hidden rounded-lg min-h-[120px]">{content}</div>
                   </div>
-                )
+                );
               })}
             </div>
           ))}
         </div>
       </section>
     </div>
-  )
+  );
 }
