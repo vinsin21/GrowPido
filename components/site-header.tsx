@@ -108,7 +108,7 @@ export default function SiteHeader() {
       <header className="fixed top-0 left-0 right-0 px-4 lg:px-6 h-14 flex items-center border-b bg-white shadow-sm z-50">
         <Link href="/" className="flex items-center justify-center gap-2">
           <Megaphone className="h-6 w-6 text-blue-600" />
-          <span className="text-lg font-bold text-gray-800">ImpactFlow Marketing</span>
+          <span className="text-lg font-bold text-gray-800">Geow Pido</span>
         </Link>
         <div className="ml-auto flex items-center gap-2">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white hidden md:flex">Free Consultation</Button>
@@ -120,10 +120,10 @@ export default function SiteHeader() {
   return (
     <>
       {/* Spacer to prevent content jump */}
-      <div className="h-14" />
+      <div className="h-12" />
 
       {/* Animated Header Container */}
-      <div className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out">
+      <div className="fixed top-0 left-0  right-0 z-50 transition-all duration-500 ease-in-out">
         <div
           className={`transition-all duration-500 ease-in-out ${
             // The isScrolled variable now correctly reflects both scroll and screen size
@@ -131,7 +131,7 @@ export default function SiteHeader() {
             }`}
         >
           <header
-            className={`px-4 lg:px-6 h-14 flex items-center bg-white transition-all duration-500 ease-in-out ${isScrolled ? "border border-gray-200/50 rounded-2xl backdrop-blur-md bg-white/95" : "border-b shadow-sm"
+            className={`px-4 lg:px-6 h-14 flex items-center bg-white transition-all duration-500 ease-in-out ${isScrolled ? "border border-gray-200/50 rounded-lg backdrop-blur-md bg-white/95" : "border-b shadow-sm"
               }`}
           >
             <Link href="/" className="flex items-center justify-center gap-2">
@@ -140,7 +140,7 @@ export default function SiteHeader() {
                 className={`font-bold text-gray-800 transition-all duration-300 ${isScrolled ? "text-base" : "text-lg"
                   }`}
               >
-                {isScrolled ? "ImpactFlow" : "ImpactFlow Marketing"}
+                {isScrolled ? "GrowPido" : "GrowPido"}
               </span>
             </Link>
 

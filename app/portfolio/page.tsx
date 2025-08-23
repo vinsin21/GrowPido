@@ -204,8 +204,7 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <FooterTapedDesign />
+
     </div>
   )
 }

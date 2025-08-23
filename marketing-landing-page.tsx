@@ -117,7 +117,7 @@ export default function MarketingLandingPage() {
             opacity: 0.5,
           }}
         />
-
+        {/* Hero Section */}
         <section className="relative w-full py-20 md:py-32 lg:py-40 xl:py-28 flex items-start justify-center text-center z-10">
           <div className="container px-4 md:px-6 relative z-10">
             <motion.div
@@ -490,7 +490,7 @@ export default function MarketingLandingPage() {
         </section>
       </main>
 
-      <FooterTapedDesign />
+
     </div>
   );
 }

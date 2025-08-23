@@ -333,8 +333,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </section>
 
-      {/* Footer */}
-      <FooterTapedDesign />
+
     </div>
   )
 }

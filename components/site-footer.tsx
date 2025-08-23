@@ -1,6 +1,11 @@
 import Link from "next/link"
 import { Mail, Linkedin, Twitter, Instagram } from "lucide-react"
 
+
+// We are not using this fotter anymore we are using 
+// We are using  <FooterTapedDesign />
+// You can see it in Layout.tsx 
+
 export default function SiteFooter() {
   return (
     <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t bg-white shadow-sm z-20">

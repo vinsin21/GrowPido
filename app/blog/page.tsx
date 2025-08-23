@@ -125,11 +125,10 @@ export default function BlogPage() {
               <Badge
                 key={category}
                 variant={category === "All" ? "default" : "outline"}
-                className={`cursor-pointer transition-colors ${
-                  category === "All"
+                className={`cursor-pointer transition-colors ${category === "All"
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300"
-                }`}
+                  }`}
               >
                 {category}
               </Badge>
@@ -262,8 +261,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <FooterTapedDesign />
+
     </div>
   )
 }

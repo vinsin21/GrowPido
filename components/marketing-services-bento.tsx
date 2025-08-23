@@ -1,94 +1,78 @@
-import { Search, Share2, Mail, Target, TrendingUp } from "lucide-react"
-import { BentoCard, BentoGrid } from "@/components/ui/bento-grid"
+import { Search, Share2, Mail, Target, TrendingUp } from "lucide-react";
+import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
+import Image from "next/image";
 
 const services = [
   {
     Icon: Search,
     name: "SEO & Content Strategy",
-    description:
-      "Boost your organic visibility and engage your audience with high-quality, keyword-rich content that ranks and converts.",
+    description: "Boost your organic visibility and engage your audience.",
     href: "/services",
     cta: "Learn more",
-    background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 opacity-60">
-        <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-200 opacity-30" />
-        <div className="absolute -right-5 -top-5 h-20 w-20 rounded-full bg-blue-300 opacity-40" />
-        <div className="absolute right-10 top-20 h-16 w-16 rounded-full bg-blue-400 opacity-20" />
-      </div>
-    ),
+    imgSrc: "https://plus.unsplash.com/premium_photo-1683980578016-a1f980719ec2?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
   },
   {
     Icon: Share2,
     name: "Social Media Management",
-    description: "Build a strong online presence and connect with your customers on all relevant platforms.",
+    description: "Build a strong online presence and connect with your customers.",
     href: "/services",
     cta: "Learn more",
-    background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-100 opacity-60">
-        <div className="absolute -left-10 -bottom-10 h-28 w-28 rounded-full bg-green-200 opacity-30" />
-        <div className="absolute -left-5 -bottom-5 h-16 w-16 rounded-full bg-green-300 opacity-40" />
-        <div className="absolute left-10 bottom-20 h-12 w-12 rounded-full bg-green-400 opacity-20" />
-      </div>
-    ),
+    imgSrc: "https://plus.unsplash.com/premium_photo-1684179641331-e89c6320b6a9?q=80&w=784&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
   },
   {
     Icon: Target,
     name: "Paid Advertising (PPC)",
-    description: "Maximize your ROI with targeted ad campaigns on Google, Meta, and other key platforms.",
+    description: "Maximize your ROI with targeted ad campaigns.",
     href: "/services",
     cta: "Learn more",
-    background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 opacity-60">
-        <div className="absolute -right-8 -bottom-8 h-24 w-24 rounded-full bg-purple-200 opacity-30" />
-        <div className="absolute -right-3 -bottom-3 h-14 w-14 rounded-full bg-purple-300 opacity-40" />
-        <div className="absolute right-8 bottom-16 h-10 w-10 rounded-full bg-purple-400 opacity-20" />
-      </div>
-    ),
+    imgSrc: "https://plus.unsplash.com/premium_photo-1669323926640-680d85157a55?q=80&w=713&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
   },
   {
     Icon: Mail,
     name: "Email Marketing",
-    description: "Nurture leads and drive conversions with personalized and automated email campaigns.",
+    description: "Nurture leads and drive conversions with personalized campaigns.",
     href: "/services",
     cta: "Learn more",
-    background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 opacity-60">
-        <div className="absolute -left-6 -top-6 h-20 w-20 rounded-full bg-orange-200 opacity-30" />
-        <div className="absolute -left-2 -top-2 h-12 w-12 rounded-full bg-orange-300 opacity-40" />
-        <div className="absolute left-8 top-12 h-8 w-8 rounded-full bg-orange-400 opacity-20" />
-      </div>
-    ),
+    imgSrc: "https://plus.unsplash.com/premium_photo-1677093905909-eed68bbe2779?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
   },
   {
     Icon: TrendingUp,
     name: "Marketing Analytics",
-    description:
-      "Get deep insights into your performance, track progress, and make data-driven decisions with comprehensive reports.",
+    description: "Make data-driven decisions with comprehensive reports.",
     href: "/services",
     cta: "Learn more",
-    background: (
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-indigo-100 opacity-60">
-        <div className="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-indigo-200 opacity-30" />
-        <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-indigo-300 opacity-40" />
-        <div className="absolute right-12 top-24 h-18 w-18 rounded-full bg-indigo-400 opacity-20" />
-      </div>
-    ),
+    imgSrc: "https://plus.unsplash.com/premium_photo-1719839720591-d43eb07de1da?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
   },
-]
+];
 
 function MarketingServicesBento() {
   return (
     <BentoGrid className="lg:grid-rows-3">
       {services.map((service) => (
-        <BentoCard key={service.name} {...service} />
+        <BentoCard
+          key={service.name}
+          {...service}
+          background={
+            <>
+              <Image
+                src={service.imgSrc}
+                alt={service.name}
+                fill
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+              />
+              {/* THE UPGRADE: A gradient overlay for readability */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+            </>
+          }
+        />
       ))}
     </BentoGrid>
-  )
+  );
 }
 
-export { MarketingServicesBento }
+export { MarketingServicesBento };
