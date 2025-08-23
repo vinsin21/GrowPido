@@ -120,7 +120,7 @@ export default function SiteHeader() {
   return (
     <>
       {/* Spacer to prevent content jump */}
-      <div className="h-12" />
+      <div className="h-12 " />
 
       {/* Animated Header Container */}
       <div className="fixed top-0 left-0  right-0 z-50 transition-all duration-500 ease-in-out">
@@ -145,7 +145,7 @@ export default function SiteHeader() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="ml-auto hidden md:flex gap-4 sm:gap-6">
+            <nav className="ml-auto hidden  md:flex gap-4 sm:gap-6">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
