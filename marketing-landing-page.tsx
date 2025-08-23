@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, useCycle } from "framer-motion";
+import { motion, AnimatePresence, useCycle, useInView } from "framer-motion"; // ✅ 1. Import useInView
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Mail, Sparkles, CheckCircle, Users, Search, FileText, Megaphone, ArrowRight, ChevronDown } from "lucide-react";
 import { MarketingServicesBento } from "@/components/marketing-services-bento";
 import { TestimonialsGridMotion } from "@/components/testimonials-grid-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react"; // ✅ 2. Import useRef
 
-// --- All your animation variants and constants remain the same ---
 const contentVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -92,6 +91,11 @@ function MobileStatusBar() {
 }
 
 export default function MarketingLandingPage() {
+
+  // ✅ 3. Set up the ref and hook to watch the pricing section
+  const pricingSectionRef = useRef(null);
+  const isPricingSectionInView = useInView(pricingSectionRef, { once: true, amount: 0.2 });
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-gray-50">
       <main className="flex-1 relative">
@@ -104,9 +108,7 @@ export default function MarketingLandingPage() {
           }}
         />
 
-        {/* --- HERO SECTION --- */}
-
-        {/* ✅ VERSION 1: YOUR ORIGINAL DESKTOP HERO SECTION (UNCHANGED) */}
+        {/* --- HERO SECTION (Desktop) --- */}
         <section className="hidden md:block relative w-full py-20 md:py-32 lg:py-40 xl:py-28 z-10">
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex items-start justify-center text-center">
@@ -147,7 +149,6 @@ export default function MarketingLandingPage() {
               </motion.div>
             </div>
           </div>
-          {/* All your original floating cards for desktop are here */}
           <motion.div
             className="absolute top-[5%] left-[5%] md:left-[10%] lg:left-[15%] bg-yellow-200 p-4 rounded-md shadow-lg rotate-3 hidden md:block max-w-[200px] text-left text-sm text-gray-800"
             custom={{ delay: 0.5 }} variants={desktopFloatingCardVariants} initial="hidden" animate="visible"
@@ -223,12 +224,10 @@ export default function MarketingLandingPage() {
           </motion.div>
         </section>
 
-
-        {/* ✅ VERSION 2: NEW & IMPROVED MOBILE HERO SECTION */}
+        {/* --- HERO SECTION (Mobile) --- */}
         <section className="md:hidden relative w-full py-16 z-10">
           <div className="container px-4">
             <div className="grid grid-cols-1 gap-12 items-center">
-              {/* --- UPDATED TEXT & BUTTONS FOR MOBILE --- */}
               <motion.div
                 className="flex flex-col items-start text-left space-y-8"
                 initial="hidden" animate="visible"
@@ -238,7 +237,6 @@ export default function MarketingLandingPage() {
                 <div className="w-full">
                   <MobileStatusBar />
                 </div>
-
                 <motion.h1 variants={contentVariants} className="text-5xl font-bold text-gray-900 leading-tight">
                   I help brands <span className="italic font-light text-blue-600">grow</span>
                   <br />
@@ -246,11 +244,9 @@ export default function MarketingLandingPage() {
                   <br />
                   marketing.
                 </motion.h1>
-
                 <motion.p variants={contentVariants} className="text-xl text-gray-700 leading-relaxed max-w-lg">
                   I craft data-driven strategies that generate leads, increase conversions, and build lasting customer relationships.
                 </motion.p>
-
                 <motion.div variants={contentVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                   <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-base transition-transform hover:scale-105">
                     <Link href="/contact">
@@ -264,9 +260,7 @@ export default function MarketingLandingPage() {
                   </Button>
                 </motion.div>
               </motion.div>
-
-              {/* --- Card Stack for Mobile --- */}
-              {/* <motion.div
+              <motion.div
                 className="relative h-80 w-full max-w-sm mx-auto"
                 initial="hidden" animate="visible" variants={contentVariants} >
                 <Card className="absolute top-0 left-0 w-64 shadow-lg transform -rotate-6 transition-all duration-300 hover:rotate-0 hover:scale-105">
@@ -287,21 +281,21 @@ export default function MarketingLandingPage() {
                     <span className="font-semibold text-gray-800">{mobileServicesNew[2].name}</span>
                   </div>
                 </Card>
-              </motion.div> */}
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* --- UNCHANGED SECTIONS --- */}
+        {/* --- SERVICES SECTION --- */}
         <section id="services" className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-gray-900">
-                  My Expertise & Services
+                  A Bespoke Suite of Services for Visionary Leaders
                 </h2>
                 <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Tailored marketing solutions designed to elevate your brand and achieve your business goals.
+                  Our methodology is built on a single belief: your influence is your most valuable asset. We offer a holistic suite of services designed to amplify it with precision and purpose.
                 </p>
               </div>
             </div>
@@ -311,99 +305,89 @@ export default function MarketingLandingPage() {
           </div>
         </section>
 
+        {/* --- TESTIMONIALS SECTION --- */}
         <section id="testimonials" className="w-full">
           <TestimonialsGridMotion />
         </section>
 
+        {/* --- PRICING SECTION (ANIMATION FIXED) --- */}
+        {/* --- PRICING SECTION (ANIMATION FIXED WITH TAILWIND CSS) --- */}
         <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-gray-900">
-                  Flexible Marketing Packages
+                  How We Partner With You
                 </h2>
                 <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Choose the plan that best fits your marketing goals and budget.
+                  Tailored engagements designed to build, amplify, and solidify your legacy.
                 </p>
               </div>
             </div>
+
             <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="flex flex-col h-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-gray-800">Starter Boost</CardTitle>
-                  <CardDescription className="text-gray-600">
-                    Ideal for new businesses establishing their online presence.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col items-center justify-center">
-                  <div className="text-4xl font-bold mb-4 text-gray-900">
-                    $499<span className="text-lg text-gray-500">/month</span>
-                  </div>
-                  <ul className="space-y-2 text-left text-gray-700">
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Basic SEO Audit</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Social Media Profile Setup</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>1-Hour Strategy Call</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Monthly Performance Report</span></li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="flex justify-center p-6">
-                  <Button asChild variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent transition-all duration-300 hover:scale-105">
-                    <Link href="/contact">Get Started</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card className="flex flex-col h-full border-2 border-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-gray-800">Growth Accelerator</CardTitle>
-                  <CardDescription className="text-gray-600">
-                    For growing brands ready to scale their marketing efforts.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col items-center justify-center">
-                  <div className="text-4xl font-bold mb-4">$1299<span className="text-lg text-gray-500">/month</span></div>
-                  <ul className="space-y-2 text-left text-gray-700">
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Comprehensive SEO Strategy</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Content Calendar & Creation (2 articles/month)</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Active Social Media Management</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>PPC Campaign Setup & Optimization</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Bi-Weekly Performance Calls</span></li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="flex justify-center p-6">
-                  <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 hover:scale-105">
-                    <Link href="/contact">Choose Plan</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card className="flex flex-col h-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-gray-800">Custom Strategy</CardTitle>
-                  <CardDescription className="text-gray-600">
-                    Tailored, full-service solutions for unique and complex marketing needs.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1 flex flex-col items-center justify-center">
-                  <div className="text-4xl font-bold mb-4 text-gray-900">Custom<span className="text-lg text-gray-500"> Quote</span></div>
-                  <ul className="space-y-2 text-left text-gray-700">
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Full-Service Marketing</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Dedicated Strategy & Execution</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Advanced Analytics & Reporting</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Ongoing Support & Optimization</span></li>
-                    <li className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>Priority Access & Consultations</span></li>
-                  </ul>
-                </CardContent>
-                <CardFooter className="flex justify-center p-6">
-                  <Button asChild variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent transition-all duration-300 hover:scale-105">
-                    <Link href="/contact">Request a Quote</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+              {[
+                {
+                  title: "The Foundation",
+                  description: "For the emerging leader ready to establish a powerful and authentic digital presence.",
+                  features: ["Basic SEO Audit", "Social Media Profile Setup", "1-Hour Strategy Call", "Monthly Performance Report"],
+                  buttonVariant: "outline",
+                  isFeatured: false,
+                },
+                {
+                  title: "The Amplifier",
+                  description: "For the established executive aiming to scale their influence and dominate their niche.",
+                  features: ["Comprehensive SEO Strategy", "Content Calendar & Creation", "Active Social Media Management", "PPC Campaign Setup & Optimization", "Bi-Weekly Performance Calls"],
+                  buttonVariant: "default",
+                  isFeatured: true,
+                },
+                {
+                  title: "The Legacy Partnership",
+                  description: "A bespoke, all-inclusive engagement for leaders requiring a comprehensive and deeply integrated branding strategy.",
+                  features: ["Full-Service Marketing", "Dedicated Strategy & Execution", "Advanced Analytics & Reporting", "Ongoing Support & Optimization", "Priority Access & Consultations"],
+                  buttonVariant: "outline",
+                  priceText: "Custom Built",
+                  isFeatured: true,
+                },
+              ].map((plan) => (
+                <div key={plan.title}>
+                  {/* ✅ Card Hover Animation using Tailwind CSS */}
+                  <Card className={`flex flex-col h-full w-full transition-all duration-300 ease-in-out ${plan.isFeatured ? 'border-2 border-blue-600 shadow-lg' : 'shadow-md'} hover:shadow-xl hover:-translate-y-2`}>
+                    <CardHeader className="text-center">
+                      <CardTitle className="text-2xl font-bold text-gray-800">{plan.title}</CardTitle>
+                      <CardDescription className="text-gray-600">{plan.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col items-center justify-center">
+                      {plan.priceText && (
+                        <div className="text-4xl font-bold mb-4 text-gray-900">Custom<span className="text-lg text-gray-500"> Built</span></div>
+                      )}
+                      <ul className="space-y-2 text-left text-gray-700 mt-4">
+                        {plan.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>{feature}</span></li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                    <CardFooter className="flex justify-center p-6">
+                      {/* ✅ Button Hover & Click Animation using Tailwind CSS */}
+                      <Button asChild
+                        className={`group transition-all duration-300 active:scale-95 ${plan.buttonVariant === 'outline' ? 'border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
+                      >
+                        <Link href="/contact" className="flex items-center justify-center overflow-hidden">
+                          <span className="transition-transform duration-300 group-hover:-translate-x-1">
+                            Book a Discovery Call
+                          </span>
+                          <ArrowRight className="w-4 h-4 ml-2 opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
+        {/* --- CONTACT CTA SECTION --- */}
         <section id="contact-cta" className="w-full py-12 md:py-24 lg:py-32 border-t bg-gray-50">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
