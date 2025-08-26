@@ -109,7 +109,7 @@ export default function MarketingLandingPage() {
         />
 
         {/* --- HERO SECTION (Desktop) --- */}
-        <section className="hidden md:block relative w-full py-20 md:py-32 lg:py-40 xl:py-28 z-10">
+        <section className="hidden md:block relative w-full py-20 md:py-32 lg:py-40 xl:py-28 z-10 overflow-hidden">
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex items-start justify-center text-center">
               <motion.div
@@ -225,7 +225,16 @@ export default function MarketingLandingPage() {
         </section>
 
         {/* --- HERO SECTION (Mobile) --- */}
-        <section className="md:hidden relative w-full py-16 z-10">
+        <section className="md:hidden relative w-full py-16 z-10 overflow-hidden">
+          {/* Background decorative elements - Square shapes with animations, themed and positioned for mobile */}
+          <div className="absolute inset-0 overflow-hidden -z-10">
+            <div className="absolute top-[10%] left-[60%] w-24 h-24 bg-blue-200 rounded-lg opacity-30 rotate-12 animate-pulse [animation-delay:0s]"></div>
+            <div className="absolute top-[20%] left-[80%] w-16 h-16 bg-blue-300 rounded-lg opacity-40 rotate-45 animate-bounce [animation-delay:1s]"></div>
+            <div className="absolute top-[30%] left-[50%] w-28 h-28 bg-blue-100 rounded-lg opacity-20 -rotate-12 animate-pulse [animation-delay:2s]"></div>
+            <div className="absolute top-[50%] left-[70%] w-20 h-20 bg-blue-200 rounded-lg opacity-30 rotate-30 animate-bounce [animation-delay:0.5s]"></div>
+            {/* <div className="absolute top-[65%] left-[40%] w-12 h-12 bg-blue-300 rounded-lg opacity-30 -rotate-45 animate-pulse [animation-delay:2.5s]"></div> */}
+          </div>
+
           <div className="container px-4">
             <div className="grid grid-cols-1 gap-12 items-center">
               <motion.div
@@ -260,7 +269,7 @@ export default function MarketingLandingPage() {
                   </Button>
                 </motion.div>
               </motion.div>
-              <motion.div
+              {/* <motion.div
                 className="relative h-80 w-full max-w-sm mx-auto"
                 initial="hidden" animate="visible" variants={contentVariants} >
                 <Card className="absolute top-0 left-0 w-64 shadow-lg transform -rotate-6 transition-all duration-300 hover:rotate-0 hover:scale-105">
@@ -281,7 +290,7 @@ export default function MarketingLandingPage() {
                     <span className="font-semibold text-gray-800">{mobileServicesNew[2].name}</span>
                   </div>
                 </Card>
-              </motion.div>
+              </motion.div> */}
             </div>
           </div>
         </section>
@@ -311,21 +320,40 @@ export default function MarketingLandingPage() {
         </section>
 
         {/* --- PRICING SECTION (ANIMATION FIXED) --- */}
-        {/* --- PRICING SECTION (ANIMATION FIXED WITH TAILWIND CSS) --- */}
-        <section id="pricing" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        {/* --- PRICING SECTION (FIXED) --- */}
+        <section
+          id="pricing"
+          ref={pricingSectionRef} // ✅ Add the ref here
+          className="w-full py-12 md:py-24 lg:py-32 bg-white"
+        >
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-gray-900">
+                <motion.h2
+                  className="text-3xl font-bold tracking-tighter sm:text-5xl text-gray-900"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isPricingSectionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5 }}
+                >
                   How We Partner With You
-                </h2>
-                <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                </motion.h2>
+                <motion.p
+                  className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isPricingSectionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
                   Tailored engagements designed to build, amplify, and solidify your legacy.
-                </p>
+                </motion.p>
               </div>
             </div>
 
-            <div className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <motion.div
+              className="mx-auto grid max-w-5xl items-start gap-8 py-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              initial={{ opacity: 0 }}
+              animate={isPricingSectionInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
               {[
                 {
                   title: "The Foundation",
@@ -333,6 +361,7 @@ export default function MarketingLandingPage() {
                   features: ["Basic SEO Audit", "Social Media Profile Setup", "1-Hour Strategy Call", "Monthly Performance Report"],
                   buttonVariant: "outline",
                   isFeatured: false,
+                  price: "$999/mo",
                 },
                 {
                   title: "The Amplifier",
@@ -340,50 +369,60 @@ export default function MarketingLandingPage() {
                   features: ["Comprehensive SEO Strategy", "Content Calendar & Creation", "Active Social Media Management", "PPC Campaign Setup & Optimization", "Bi-Weekly Performance Calls"],
                   buttonVariant: "default",
                   isFeatured: true,
+                  price: "$2,499/mo",
                 },
                 {
                   title: "The Legacy Partnership",
                   description: "A bespoke, all-inclusive engagement for leaders requiring a comprehensive and deeply integrated branding strategy.",
                   features: ["Full-Service Marketing", "Dedicated Strategy & Execution", "Advanced Analytics & Reporting", "Ongoing Support & Optimization", "Priority Access & Consultations"],
                   buttonVariant: "outline",
-                  priceText: "Custom Built",
-                  isFeatured: true,
+                  price: "Custom Built",
+                  isFeatured: false,
                 },
-              ].map((plan) => (
-                <div key={plan.title}>
-                  {/* ✅ Card Hover Animation using Tailwind CSS */}
+              ].map((plan, index) => (
+                <motion.div
+                  key={plan.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isPricingSectionInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.3 + (index * 0.1) }}
+                >
                   <Card className={`flex flex-col h-full w-full transition-all duration-300 ease-in-out ${plan.isFeatured ? 'border-2 border-blue-600 shadow-lg' : 'shadow-md'} hover:shadow-xl hover:-translate-y-2`}>
                     <CardHeader className="text-center">
                       <CardTitle className="text-2xl font-bold text-gray-800">{plan.title}</CardTitle>
                       <CardDescription className="text-gray-600">{plan.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-1 flex flex-col items-center justify-center">
-                      {plan.priceText && (
-                        <div className="text-4xl font-bold mb-4 text-gray-900">Custom<span className="text-lg text-gray-500"> Built</span></div>
+                      {plan.price && (
+                        <div className="text-4xl font-bold mb-4 text-gray-900">
+                          {plan.price}
+                          {!plan.price.includes("Custom") && <span className="text-lg text-gray-500">/mo</span>}
+                        </div>
                       )}
                       <ul className="space-y-2 text-left text-gray-700 mt-4">
                         {plan.features.map((feature) => (
-                          <li key={feature} className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-blue-600" /><span>{feature}</span></li>
+                          <li key={feature} className="flex items-center gap-2">
+                            <CheckCircle className="h-4 w-4 text-blue-600" />
+                            <span>{feature}</span>
+                          </li>
                         ))}
                       </ul>
                     </CardContent>
                     <CardFooter className="flex justify-center p-6">
-                      {/* ✅ Button Hover & Click Animation using Tailwind CSS */}
-                      <Button asChild
-                        className={`group transition-all duration-300 active:scale-95 ${plan.buttonVariant === 'outline' ? 'border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
-                      >
-                        <Link href="/contact" className="flex items-center justify-center overflow-hidden">
-                          <span className="transition-transform duration-300 group-hover:-translate-x-1">
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button asChild
+                          className={`${plan.buttonVariant === 'outline' ? 'border-blue-600 text-blue-600 hover:bg-blue-50 bg-transparent' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
+                        >
+                          <Link href="/contact" className="flex items-center justify-center">
                             Book a Discovery Call
-                          </span>
-                          <ArrowRight className="w-4 h-4 ml-2 opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
-                        </Link>
-                      </Button>
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Link>
+                        </Button>
+                      </motion.div>
                     </CardFooter>
                   </Card>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
